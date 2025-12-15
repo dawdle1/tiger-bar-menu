@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tiger Bar – QR Menu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1b1b1b, #000);
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 20px 10px 10px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+    header .note {
+      margin-top: 6px;
+      font-size: 16px;
+      color: #4caf50;
+    }
+    .lang {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 0 20px;
+      flex-wrap: wrap;
+    }
+    .lang button {
+      background: #222;
+      border: 1px solid #444;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .lang button.active {
+      background: #f5c542;
+      color: #000;
+      border-color: #f5c542;
+    }
+    section {
+      padding: 0 12px 24px;
+    }
+    .category {
+      margin-bottom: 18px;
+    }
+    .category h2 {
+      font-size: 20px;
+      margin: 16px 0 8px;
+      border-left: 4px solid #f5c542;
+      padding-left: 8px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #333;
+      font-size: 16px;
+    }
+    .price {
+      color: #f5c542;
+      white-space: nowrap;
+    }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🐯 Tiger Bar</h1>
+  <div class="note" id="note">🎱 Free Billiard</div>
+</header>
+
+<div class="lang">
+  <button onclick="setLang('en')" class="active">EN</button>
+  <button onclick="setLang('ru')">RU</button>
+  <button onclick="setLang('th')">TH</button>
+  <button onclick="setLang('cn')">中文</button>
+</div>
+
+<section id="menu"></section>
+
+<footer>
+  Scan • Order • Enjoy
+</footer>
+
+<script>
+const data = {
+  note: {
+    en: "🎱 Free Billiard",
+    ru: "🎱 Бильярд бесплатно",
+    th: "🎱 เล่นบิลเลียดฟรี",
+    cn: "🎱 台球免费"
+  },
+  en: {
+    "Soft Drinks": [
+      ["Water", "50 ฿"], ["Soda Water", "50 ฿"], ["Coke", "50 ฿"], ["Sprite", "50 ฿"],
+      ["Orange Juice", "70 ฿"], ["Apple Juice", "70 ฿"], ["Red Bull", "100 ฿"]
+    ],
+    "Cocktails (180 ฿)": [
+      ["Margarita"], ["Mai Tai"], ["Pina Colada"], ["Blue Hawaii"], ["B52"], ["Long Island"]
+    ],
+    "Beer": [
+      ["Leo", "80 ฿"], ["Chang", "80 ฿"], ["Tiger", "80 ฿"], ["Heineken", "80 ฿"], ["Singha", "80 ฿"],
+      ["San Mig Light", "100 ฿"], ["Strongbow", "150 ฿"]
+    ],
+    "Wine": [["Red Wine (Bottle)", "1000 ฿"], ["White Wine (Bottle)", "1000 ฿"]],
+    "Whiskey / Spirits": [["Sangsom", "80 ฿"], ["Jack Daniel’s", "100 ฿"], ["Black Label", "150 ฿"], ["Chivas", "180 ฿"]],
+    "Shots": [["Vodka", "80 ฿"], ["Tequila", "160 ฿"], ["Jägermeister", "160 ฿"], ["B52", "180 ฿"]]
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`button[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.getElementById('note').innerText = data.note[lang];
+  render();
+}
+
+function render() {
+  const menu = document.getElementById('menu');
+  menu.innerHTML = '';
+  const categories = data[currentLang] || data.en;
+
+  for (const cat in categories) {
+    const div = document.createElement('div');
+    div.className = 'category';
+    div.innerHTML = `<h2>${cat}</h2>`;
+    categories[cat].forEach(i => {
+      div.innerHTML += `<div class="item"><span>${i[0]}</span><span class="price">${i[1] || ''}</span></div>`;
+    });
+    menu.appendChild(div);
+  }
+}
+
+render();
+</script>
+
+</body>
+</html>
