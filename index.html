@@ -1,245 +1,86 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tiger Bar Phuket – Menu</title>
-
+<title>Tiger Bar Phuket</title>
 <style>
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #0f0f0f;
-  color: #fff;
-}
-
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.note {
-  text-align: center;
-  font-size: 14px;
-  color: #ffd700;
-  margin-bottom: 12px;
-}
-
-.lang {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.lang button {
-  background: #222;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-}
-
-.lang button.active {
-  background: #ffd700;
-  color: #000;
-}
-
-.map-btn {
-  display: block;
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  background: #1f1f1f;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: 600;
-}
-
-.section {
-  margin-bottom: 22px;
-}
-
-.section h2 {
-  margin-bottom: 8px;
-  border-bottom: 1px solid #333;
-  padding-bottom: 4px;
-}
-
-.item {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 15px;
-}
-
-.cocktail {
-  padding: 8px 0;
-}
-
-.cocktail-name {
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-}
-
-.cocktail-desc {
-  display: none;
-  font-size: 13px;
-  color: #ccc;
-  margin-top: 4px;
-}
+body { margin:0; font-family:Arial, sans-serif; background:#0f172a; color:#fff; }
+header { padding:16px; text-align:center; background:#020617; }
+header h1 { margin:0; font-size:22px; }
+.lang { display:flex; justify-content:center; gap:8px; margin-top:10px; }
+.lang button { background:#1e293b; color:#fff; border:none; padding:6px 10px; border-radius:6px; }
+.lang button.active { background:#facc15; color:#000; }
+.note { text-align:center; padding:10px; background:#022c22; font-weight:bold; }
+.map-btn { display:block; margin:10px auto; width:90%; text-align:center; background:#2563eb; padding:10px; border-radius:8px; color:#fff; text-decoration:none; }
+.section { margin:14px; }
+.section h2 { border-bottom:1px solid #334155; padding-bottom:6px; margin-bottom:8px; }
+.item, .cocktail-name { display:flex; justify-content:space-between; padding:6px 0; }
+.cocktail { border-bottom:1px dashed #334155; padding:6px 0; }
+.cocktail-desc { display:none; font-size:13px; color:#cbd5f5; margin-top:4px; }
 </style>
 </head>
-
 <body>
-<div class="container">
+<header>
   <h1>Tiger Bar</h1>
-  <div class="note">🎱 Free Billiard</div>
-
   <div class="lang">
-    <button onclick="setLang('en')" class="active">EN</button>
-    <button onclick="setLang('ru')">RU</button>
-    <button onclick="setLang('th')">TH</button>
-    <button onclick="setLang('cn')">中文</button>
+    <button class="active" onclick="setLang('en',this)">EN</button>
+    <button onclick="setLang('ru',this)">RU</button>
+    <button onclick="setLang('th',this)">TH</button>
+    <button onclick="setLang('cn',this)">中文</button>
   </div>
-
-  <a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8" target="_blank">📍 Open in Google Maps</a>
-
-  <div id="menu"></div>
-</div>
+</header>
+<div class="note"></div>
+<a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8" target="_blank"></a>
+<div id="menu"></div>
 
 <script>
 let lang = 'en';
-
 const i18n = {
-  en: {
-    free: '🎱 Free Billiard',
-    map: '📍 Open in Google Maps',
-    soft: 'Soft Drinks',
-    beer: 'Beer',
-    whiskey: 'Whiskey',
-    shots: 'Shots',
-    cocktails: 'Cocktails (tap to see ingredients)'
-  },
-  ru: {
-    free: '🎱 Бильярд бесплатно',
-    map: '📍 Открыть в Google Maps',
-    soft: 'Безалкогольные напитки',
-    beer: 'Пиво',
-    whiskey: 'Виски и крепкий алкоголь',
-    shots: 'Шоты',
-    cocktails: 'Коктейли (нажмите для состава)'
-  },
-  th: {
-    free: '🎱 เล่นพูลฟรี',
-    map: '📍 เปิดใน Google Maps',
-    soft: 'เครื่องดื่มไม่มีแอลกอฮอล์',
-    beer: 'เบียร์',
-    whiskey: 'วิสกี้และสุรา',
-    shots: 'ช็อต',
-    cocktails: 'ค็อกเทล (กดดูส่วนผสม)'
-  },
-  cn: {
-    free: '🎱 台球免费',
-    map: '📍 在 Google 地图中打开',
-    soft: '无酒精饮料',
-    beer: '啤酒',
-    whiskey: '威士忌及烈酒',
-    shots: '短饮',
-    cocktails: '鸡尾酒（点击查看配料）'
-  }
+  en:{free:'🎱 Free Billiard',map:'📍 Open in Google Maps',soft:'Soft Drinks',beer:'Beer',whiskey:'Whiskey',shots:'Shots',cocktails:'Cocktails (tap to see ingredients)'},
+  ru:{free:'🎱 Бильярд бесплатно',map:'📍 Открыть в Google Maps',soft:'Безалкогольные напитки',beer:'Пиво',whiskey:'Виски',shots:'Шоты',cocktails:'Коктейли (нажмите для состава)'},
+  th:{free:'🎱 เล่นพูลฟรี',map:'📍 เปิดใน Google Maps',soft:'เครื่องดื่มไม่มีแอลกอฮอล์',beer:'เบียร์',whiskey:'วิสกี้',shots:'ช็อต',cocktails:'ค็อกเทล (กดดูส่วนผสม)'},
+  cn:{free:'🎱 台球免费',map:'📍 在 Google 地图中打开',soft:'无酒精饮料',beer:'啤酒',whiskey:'威士忌',shots:'短饮',cocktails:'鸡尾酒（点击查看配料）'}
 };
 
-const sections = {
-  soft: [
-    ['Water','30'],['M-150','50'],['Coca-Cola','50'],['Coke Light','50'],['Coke Diet','50'],
-    ['Schweppes Lemon','50'],['Orange Juice','70'],['Apple Juice','70'],['Pineapple Juice','70'],
-    ['Cranberry Juice','70'],['Soda Water','50'],['Tonic Water','50'],['Red Bull','100']
-  ],
-  beer: [
-    ['Leo','80'],['Chang','80'],['Tiger','80'],['Heineken','80'],
-    ['Singha','100'],['San Mig Light','100']
-  ],
-  whiskey: [
-    ['Sansom','80'],['Hongtong','80'],['Blend 225','225'],
-    ['Jack Daniel’s','180'],['Black Label','180'],['Red Label','180'],
-    ['Captain Morgan','180'],['Chivas Regal','180'],['Jameson','180'],['Ballantine’s','180'],
-    ['Bacardi','160'],['Malibu','160'],['Vodka','180'],['Gin','180'],['Bombay','180']
-  ],
-  shots: [
-    ['Vodka','150'],['Tequila','150/160'],['Tequila Rose','160'],['Sambuca','160'],
-    ['Black Sambuca','160'],['Jägermeister','160'],['Sansom','60'],['B-52','180']
-  ],
-  cocktails: [
-    ['Margarita','Tequila, Triple Sec, Lime'],
-    ['Mai Tai','White rum, Dark rum, Curaçao, Orgeat, Lime'],
-    ['Piña Colada','White rum, Coconut cream, Pineapple'],
-    ['Blue Hawaii','White rum, Blue Curaçao, Pineapple, Lemon'],
-    ['Black Russian','Vodka, Coffee liqueur'],
-    ['White Russian','Vodka, Coffee liqueur, Cream'],
-    ['Cuba Libre','White rum, Cola, Lime'],
-    ['Long Island Iced Tea','Vodka, Gin, Rum, Tequila, Triple sec, Cola'],
-    ['Tequila Sunrise','Tequila, Orange juice, Grenadine'],
-    ['B-52','Coffee liqueur, Irish cream, Triple sec'],
-    ['Tom Collins','Gin, Lemon, Sugar syrup, Soda']
-  ]
+const data = {
+soft:[['Water','30'],['M-150','50'],['Coca-Cola','50'],['Coke Light','50'],['Coke Diet','50'],['Schweppes Lemon','50'],['Orange Juice','70'],['Apple Juice','70'],['Pineapple Juice','70'],['Cranberry Juice','70'],['Red Bull','100']],
+beer:[['Leo','80'],['Chang','80'],['Tiger','80'],['Heineken','80'],['Singha','100'],['San Mig Light','100']],
+whiskey:[['Sansom','80'],['Hongtong','80'],['Blend 225','225'],['Jack Daniel’s','180'],['Black Label','180'],['Red Label','180'],['Captain Morgan','180'],['Chivas Regal','180'],['Jameson','180'],['Ballantine’s','180'],['Bacardi','160'],['Malibu','160'],['Vodka','180'],['Gin','180'],['Bombay','180']],
+shots:[['Vodka','150'],['Tequila','150/160'],['Tequila Rose','160'],['Sambuca','160'],['Black Sambuca','160'],['Jägermeister','160'],['Sansom','60'],['B-52','180']],
+cocktails:[['Margarita','Tequila, Triple Sec, Lime'],['Mai Tai','White rum, Dark rum, Curaçao, Orgeat, Lime'],['Piña Colada','White rum, Coconut cream, Pineapple'],['Blue Hawaii','White rum, Blue Curaçao, Pineapple, Lemon'],['Black Russian','Vodka, Coffee liqueur'],['White Russian','Vodka, Coffee liqueur, Cream'],['Cuba Libre','White rum, Cola, Lime'],['Long Island Iced Tea','Vodka, Gin, Rum, Tequila, Triple sec, Cola'],['Tequila Sunrise','Tequila, Orange juice, Grenadine'],['B-52','Coffee liqueur, Irish cream, Triple sec'],['Tom Collins','Gin, Lemon, Sugar syrup, Soda']]
 };
 
-function render() {
-  const menu = document.getElementById('menu');
-  menu.innerHTML = '';
-
-  document.querySelector('.note').textContent = i18n[lang].free;
-  document.querySelector('.map-btn').textContent = i18n[lang].map;
-
-  Object.keys(sections).forEach(key => {
-    const sec = document.createElement('div');
-    sec.className = 'section';
-    sec.innerHTML = `<h2>${i18n[lang][key]}</h2>`;
-
-    sections[key].forEach(it => {
-      if (key === 'cocktails') {
-        const c = document.createElement('div');
-        c.className = 'cocktail';
-        c.innerHTML = `
-          <div class="cocktail-name"><span>${it[0]}</span><span>180 THB</span></div>
-          <div class="cocktail-desc">${it[1]}</div>`;
-        c.querySelector('.cocktail-name').onclick = () => {
-          const d = c.querySelector('.cocktail-desc');
-          d.style.display = d.style.display === 'block' ? 'none' : 'block';
+function render(){
+  document.querySelector('.note').textContent=i18n[lang].free;
+  document.querySelector('.map-btn').textContent=i18n[lang].map;
+  const menu=document.getElementById('menu');
+  menu.innerHTML='';
+  for(const key in data){
+    const s=document.createElement('div'); s.className='section';
+    s.innerHTML=`<h2>${i18n[lang][key]}</h2>`;
+    data[key].forEach(i=>{
+      if(key==='cocktails'){
+        const c=document.createElement('div'); c.className='cocktail';
+        c.innerHTML=`<div class="cocktail-name"><span>${i[0]}</span><span>180 THB</span></div><div class="cocktail-desc">${i[1]}</div>`;
+        c.querySelector('.cocktail-name').onclick=()=>{
+          const d=c.querySelector('.cocktail-desc'); d.style.display=d.style.display==='block'?'none':'block';
         };
-        sec.appendChild(c);
+        s.appendChild(c);
       } else {
-        const row = document.createElement('div');
-        row.className = 'item';
-        row.innerHTML = `<span>${it[0]}</span><span>${it[1]} THB</span>`;
-        sec.appendChild(row);
+        const r=document.createElement('div'); r.className='item';
+        r.innerHTML=`<span>${i[0]}</span><span>${i[1]} THB</span>`;
+        s.appendChild(r);
       }
     });
-    menu.appendChild(sec);
-  });
+    menu.appendChild(s);
+  }
 }
 
-function setLang(l, el) {
-  lang = l;
-  document.querySelectorAll('.lang button').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  render();
-}
-
+function setLang(l,el){lang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
 render();
 </script>
+
 </body>
 </html>
-```
