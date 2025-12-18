@@ -1,137 +1,221 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tiger Bar Phuket</title>
+<title>Tiger Bar Phuket – Menu</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;background:#0b0f0c;color:#fff}
-.container{max-width:480px;margin:auto;padding:16px}
-h1{text-align:center;margin:10px 0 5px}
-.sub{text-align:center;color:#7CFF9E;font-size:14px;margin-bottom:12px}
-.lang{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
-.lang button{flex:1;padding:8px;border:none;border-radius:10px;background:#1c2b22;color:#fff;cursor:pointer}
-.lang button.active{background:#2ecc71;color:#000;font-weight:600}
-.section{margin-top:22px}
-.section h2{border-bottom:1px solid #2ecc71;padding-bottom:6px;margin-bottom:10px}
-.item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #233}
-.note{margin:14px 0;padding:10px;border-radius:12px;background:#14241b;text-align:center}
-.map-btn {
-  position: relative;
-  z-index: 1;
-  display: block;
-  margin: 12px auto;
-  padding: 12px 16px;
-  background: #1e1e1e;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #0f0f0f;
   color: #fff;
-  border-radius: 10px;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.note {
+  text-align: center;
+  font-size: 14px;
+  color: #ffd700;
+  margin-bottom: 12px;
+}
+
+.lang {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lang button {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.lang button.active {
+  background: #ffd700;
+  color: #000;
+}
+
+.map-btn {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: #1f1f1f;
+  color: #fff;
   text-align: center;
   text-decoration: none;
+  border-radius: 10px;
   font-weight: 600;
 }
 
-.cocktail{margin:8px 0}
-.cocktail button{width:100%;background:#1c2b22;color:#fff;border:none;padding:10px;border-radius:12px;text-align:left;cursor:pointer}
-.cocktail-content{display:none;padding:10px 12px;font-size:14px;color:#cfc;background:#0f1a14;border-radius:0 0 12px 12px}
+.section {
+  margin-bottom: 22px;
+}
+
+.section h2 {
+  margin-bottom: 8px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 15px;
+}
+
+.cocktail {
+  padding: 8px 0;
+}
+
+.cocktail-name {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.cocktail-desc {
+  display: none;
+  font-size: 13px;
+  color: #ccc;
+  margin-top: 4px;
+}
 </style>
 </head>
+
 <body>
 <div class="container">
-<h1>Tiger Bar</h1>
-<div class="sub" id="note"></div>
+  <h1>Tiger Bar</h1>
+  <div class="note">🎱 Free Billiard</div>
 
-<div class="lang">
-<button id="btn-en" onclick="setLang('en')">EN</button>
-<button id="btn-ru" onclick="setLang('ru')">RU</button>
-<button id="btn-th" onclick="setLang('th')">TH</button>
-<button id="btn-cn" onclick="setLang('cn')">中文</button>
-</div>
+  <div class="lang">
+    <button onclick="setLang('en')" class="active">EN</button>
+    <button onclick="setLang('ru')">RU</button>
+    <button onclick="setLang('th')">TH</button>
+    <button onclick="setLang('cn')">中文</button>
+  </div>
 
-<a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8?g_st=ipc" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+  <a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8" target="_blank">📍 Open in Google Maps</a>
 
-<div id="menu"></div>
+  <div id="menu"></div>
 </div>
 
 <script>
-const data={
- note:{en:'🎱 Free Billiard',ru:'🎱 Бильярд бесплатен',th:'🎱 เล่นพูลฟรี',cn:'🎱 台球免费'},
- titles:{
-  beer:{en:'Beer / Drinks',ru:'Пиво и напитки',th:'เบียร์และเครื่องดื่ม',cn:'啤酒与饮品'},
-  wine:{en:'Wine',ru:'Вино',th:'ไวน์',cn:'葡萄酒'},
-  spirits:{en:'Spirits',ru:'Крепкий алкоголь',th:'สุรา',cn:'烈酒'},
-  whiskey:{en:'Whiskey',ru:'Виски',th:'วิสกี้',cn:'威士忌'},
-  shots:{en:'Shots',ru:'Шоты',th:'ช็อต',cn:'短饮'},
-  cocktails:{en:'Cocktails (tap for ingredients)',ru:'Коктейли (нажмите для состава)',th:'ค็อกเทล (กดดูส่วนผสม)',cn:'鸡尾酒（点击查看配料）'}
- },
- items:{
-  beer:[
-   ['Water','30 THB'],['M-150','50 THB'],['Coca-Cola','50 THB'],['Coke Light','50 THB'],['Coke Diet','50 THB'],['Sprite','50 THB'],['Fanta','50 THB'],['Schweppes Lemon','50 THB'],['Orange Juice','70 THB'],['Apple Juice','70 THB'],['Pineapple Juice','70 THB'],['Cranberry Juice','70 THB'],['Soda Water','50 THB'],['Tonic Water','50 THB'],['Red Bull','100 THB'],['Singha','100 THB'],['Leo','80 THB'],['Chang','80 THB'],['Tiger','80 THB'],['Heineken','80 THB'],['San Mig Light','100 THB'],['SPY','150 THB'],['Smirnoff Ice','150 THB'],['Strongbow Apple Cider','180 THB'],['Kopparberg (Mixed Fruit / Strawberry & Lime)','250 THB']
-  ],['Coca-Cola','50 THB'],['Sprite','50 THB'],['Fanta','50 THB'],['Soda Water','50 THB'],['Tonic Water','50 THB'],['Red Bull','80 THB'],['Singha','100 THB'],['Heineken','100 THB'],['San Mig Light','100 THB'],['SPY','150 THB'],['Smirnoff Ice','150 THB'],['Strongbow Apple Cider','180 THB'],['Kopparberg (Mixed Fruit / Strawberry & Lime)','250 THB']
-  ],['Singha','100 THB'],['Heineken','100 THB'],['San Mig Light','100 THB'],['SPY','150 THB'],['Smirnoff Ice','150 THB'],['Strongbow Apple Cider','180 THB'],['Kopparberg (Mixed Fruit / Strawberry & Lime)','250 THB']
-  ],
-  wine:[
-   ['Red wine (glass)','180 THB'],['White wine (glass)','180 THB'],['Bottle','1000 THB']
-  ],
-  ['Malibu','160 THB'],['Vodka','180 THB'],['Gin','180 THB'],['Bombay','180 THB']
-  ],
-  whiskey:[
-   ['Jack Daniel’s','180 THB'],['Black Label','180 THB'],['Red Label','180 THB'],['Captain Morgan','180 THB'],['Chivas Regal','180 THB'],['Jameson','180 THB'],['Ballantine’s','180 THB'],['Sangsom','80 THB'],['Hongtong','80 THB'],['Blend 225','225 THB'],['Bacardi','160 THB'],['Malibu','160 THB'],['Vodka','180 THB'],['Gin','180 THB'],['Bombay','180 THB']
-  ],['Black Label','180 THB'],['Red Label','180 THB'],['Captain Morgan','180 THB'],['Chivas Regal','180 THB'],['Jameson','180 THB'],['Ballantine’s','180 THB']
-  ],['Black Label','180 THB'],['Red Label','180 THB'],['Captain Morgan','180 THB']
-  ],
-  shots:[
-   ['Vodka shot','150 THB'],['Tequila shot','150–160 THB'],['Whiskey shot','180 THB'],['Rum shot','160 THB'],['Gin shot','180 THB'],['Sangsom shot','60 THB']
-  ],['Tequila shot','150–160 THB'],['Whiskey shot','180 THB'],['Rum shot','160 THB'],['Gin shot','180 THB']
-  ],['Tequila shot','150–160 THB']
-  ],
-  cocktails:[
-   {name:'Margarita',price:'180 THB',desc:{en:'Tequila (Blanco), Triple Sec (Cointreau), fresh lime juice',ru:'Текила (бланко), трипл сек (Cointreau), свежий сок лайма',th:'เตกีล่า บลังโก ทริปเปิลเซค น้ำมะนาวสด',cn:'银龙舌兰、橙味利口酒、鲜青柠汁'}},
-   {name:'Mai Tai',price:'180 THB',desc:{en:'White rum, dark rum, orange curaçao, orgeat syrup, fresh lime juice',ru:'Светлый ром, тёмный ром, апельсиновый кюрасао, оржеат, сок лайма',th:'รัมขาว รัมดำ คูราเซาส้ม ออร์เจียต น้ำมะนาว',cn:'白朗姆、黑朗姆、橙皮酒、杏仁糖浆、青柠汁'}},
-   {name:'Piña Colada',price:'180 THB',desc:{en:'White rum, coconut cream, pineapple juice',ru:'Светлый ром, кокосовые сливки, ананасовый сок',th:'รัมขาว ครีมมะพร้าว น้ำสับปะรด',cn:'白朗姆、椰子奶油、菠萝汁'}},
-   {name:'Blue Hawaii',price:'180 THB',desc:{en:'White rum, Blue Curaçao, pineapple juice, fresh lemon juice',ru:'Светлый ром, блю кюрасао, ананасовый сок, лимонный сок',th:'รัมขาว บลูคูราเซา น้ำสับปะรด น้ำเลมอน',cn:'白朗姆、蓝橙酒、菠萝汁、柠檬汁'}},
-   {name:'Black Russian',price:'180 THB',desc:{en:'Vodka, coffee liqueur',ru:'Водка, кофейный ликёр',th:'วอดก้า ลิเคียวร์กาแฟ',cn:'伏特加、咖啡利口酒'}},
-   {name:'White Russian',price:'180 THB',desc:{en:'Vodka, coffee liqueur, cream or milk',ru:'Водка, кофейный ликёр, сливки или молоко',th:'วอดก้า ลิเคียวร์กาแฟ ครีมหรือนม',cn:'伏特加、咖啡利口酒、奶油或牛奶'}},
-   {name:'Cuba Libre',price:'180 THB',desc:{en:'White rum, cola, fresh lime juice',ru:'Светлый ром, кола, сок лайма',th:'รัมขาว โคล่า น้ำมะนาว',cn:'白朗姆、可乐、青柠汁'}},
-   {name:'Long Island Iced Tea',price:'180 THB',desc:{en:'Vodka, gin, white rum, tequila, triple sec, fresh lemon juice, cola',ru:'Водка, джин, светлый ром, текила, трипл сек, лимонный сок, кола',th:'วอดก้า จิน รัมขาว เตกีล่า ทริปเปิลเซค น้ำเลมอน โคล่า',cn:'伏特加、金酒、白朗姆、龙舌兰、橙酒、柠檬汁、可乐'}},
-   {name:'Tequila Sunrise',price:'180 THB',desc:{en:'Tequila, orange juice, grenadine',ru:'Текила, апельсиновый сок, гренадин',th:'เตกีล่า น้ำส้ม เกรนาดีน',cn:'龙舌兰、橙汁、石榴糖浆'}},
-   {name:'B-52',price:'180 THB',desc:{en:'Coffee liqueur, Irish cream, triple sec',ru:'Кофейный ликёр, ирландский крем, трипл сек',th:'ลิเคียวร์กาแฟ ไอริชครีม ทริปเปิลเซค',cn:'咖啡利口酒、爱尔兰奶油、橙味利口酒'}},
-   {name:'Tom Collins',price:'180 THB',desc:{en:'Gin, fresh lemon juice, sugar syrup, soda water',ru:'Джин, лимонный сок, сахарный сироп, сода',th:'จิน น้ำเลมอน ไซรัป โซดา',cn:'金酒、柠檬汁、糖浆、苏打水'}}
-  ]
- }
+let lang = 'en';
+
+const sections = {
+  soft: {
+    title: { en: 'Soft Drinks', ru: 'Безалкогольные', th: 'น้ำอัดลม', cn: '软饮' },
+    items: [
+      ['Water','30'],['M-150','50'],['Coca-Cola','50'],['Coke Light','50'],['Coke Diet','50'],
+      ['Schweppes Lemon','50'],['Orange Juice','70'],['Apple Juice','70'],['Pineapple Juice','70'],
+      ['Cranberry Juice','70'],['Soda Water','50'],['Tonic Water','50'],['Red Bull','100']
+    ]
+  },
+  beer: {
+    title: { en: 'Beer', ru: 'Пиво', th: 'เบียร์', cn: '啤酒' },
+    items: [
+      ['Leo','80'],['Chang','80'],['Tiger','80'],['Heineken','80'],
+      ['Singha','100'],['San Mig Light','100']
+    ]
+  },
+  whiskey: {
+    title: { en: 'Whiskey', ru: 'Виски', th: 'วิสกี้', cn: '威士忌' },
+    items: [
+      ['Sangsom','80'],['Hongtong','80'],['Blend 225','225'],
+      ['Jack Daniel’s','180'],['Black Label','180'],['Red Label','180'],
+      ['Captain Morgan','180'],['Chivas Regal','180'],['Jameson','180'],['Ballantine’s','180'],
+      ['Bacardi','160'],['Malibu','160'],['Vodka','180'],['Gin','180'],['Bombay','180']
+    ]
+  },
+  shots: {
+    title: { en: 'Shots', ru: 'Шоты', th: 'ช็อต', cn: '短饮' },
+    items: [
+      ['Vodka','150'],['Tequila','150–160'],['Sangsom','60']
+    ]
+  },
+  cocktails: {
+    title: { en: 'Cocktails (tap)', ru: 'Коктейли (нажмите)', th: 'ค็อกเทล', cn: '鸡尾酒' },
+    items: [
+      ['Margarita','Tequila, Triple Sec, Lime'],
+      ['Mai Tai','White rum, Dark rum, Curaçao, Orgeat, Lime'],
+      ['Piña Colada','White rum, Coconut cream, Pineapple'],
+      ['Blue Hawaii','White rum, Blue Curaçao, Pineapple, Lemon'],
+      ['Black Russian','Vodka, Coffee liqueur'],
+      ['White Russian','Vodka, Coffee liqueur, Cream'],
+      ['Cuba Libre','White rum, Cola, Lime'],
+      ['Long Island Iced Tea','Vodka, Gin, Rum, Tequila, Triple sec, Cola'],
+      ['Tequila Sunrise','Tequila, Orange juice, Grenadine'],
+      ['B-52','Coffee liqueur, Irish cream, Triple sec'],
+      ['Tom Collins','Gin, Lemon, Sugar syrup, Soda']
+    ]
+  }
 };
-let currentLang='en';
 
-function setLang(lang){
- currentLang=lang;
- ['en','ru','th','cn'].forEach(l=>{
-  const b=document.getElementById('btn-'+l);
-  if(b) b.classList.toggle('active',l===lang);
- });
- render();
+function render() {
+  const menu = document.getElementById('menu');
+  menu.innerHTML = '';
+
+  Object.values(sections).forEach(sec => {
+    const div = document.createElement('div');
+    div.className = 'section';
+    div.innerHTML = `<h2>${sec.title[lang]}</h2>`;
+
+    sec.items.forEach(it => {
+      if (sec === sections.cocktails) {
+        const c = document.createElement('div');
+        c.className = 'cocktail';
+        c.innerHTML = `
+          <div class="cocktail-name">
+            <span>${it[0]}</span><span>180 THB</span>
+          </div>
+          <div class="cocktail-desc">${it[1]}</div>
+        `;
+        c.querySelector('.cocktail-name').onclick = () => {
+          const d = c.querySelector('.cocktail-desc');
+          d.style.display = d.style.display === 'block' ? 'none' : 'block';
+        };
+        div.appendChild(c);
+      } else {
+        const row = document.createElement('div');
+        row.className = 'item';
+        row.innerHTML = `<span>${it[0]}</span><span>${it[1]} THB</span>`;
+        div.appendChild(row);
+      }
+    });
+
+    menu.appendChild(div);
+  });
 }
 
-function section(title,items){
- return `<div class="section"><h2>${title}</h2>${items.map(i=>`<div class="item"><span>${i[0]}</span><span>${i[1]}</span></div>`).join('')}</div>`;
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
 }
 
-function render(){
- document.getElementById('note').innerText=data.note[currentLang];
- const m=document.getElementById('menu');
- m.innerHTML='';
- m.innerHTML+=section(data.titles.beer[currentLang],data.items.beer);
- m.innerHTML+=section(data.titles.wine[currentLang],data.items.wine);
- m.innerHTML+=section(data.titles.spirits[currentLang],data.items.spirits);
- m.innerHTML+=section(data.titles.shots[currentLang],data.items.shots);
- m.innerHTML+=`<div class="section"><h2>${data.titles.cocktails[currentLang]}</h2>${data.items.cocktails.map(c=>`<div class="cocktail"><button onclick="toggle(this)">${c.name} — ${c.price}</button><div class="cocktail-content">${c.desc[currentLang]}</div></div>`).join('')}</div>`;
-}
-
-function toggle(btn){
- const box=btn.nextElementSibling;
- box.style.display=box.style.display==='block'?'none':'block';
-}
-
-setLang('en');
+render();
 </script>
 </body>
 </html>
+```
