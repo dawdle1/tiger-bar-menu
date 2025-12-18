@@ -56,6 +56,11 @@ header h1{margin:0;font-size:22px}
 
 <script>
 let lang='en';
+// auto-detect language by device
+const deviceLang = navigator.language || navigator.userLanguage;
+if(deviceLang.startsWith('ru')) lang='ru';
+else if(deviceLang.startsWith('th')) lang='th';
+else if(deviceLang.startsWith('zh')) lang='cn';
 const i18n={
  en:{free:'🎱 Free Billiard',map:'📍 Open in Google Maps',soft:'Soft Drinks',beer:'Beer',whiskey:'Whiskey',shots:'Shots',cocktails:'Cocktails (tap to see ingredients)',ageTitle:'21+ Only',ageText:'You must be 21 years old or older to enter this site',ageYes:'Yes, I am 21+',ageNo:'No'},
  ru:{free:'🎱 Бильярд бесплатно',map:'📍 Открыть в Google Maps',soft:'Безалкогольные напитки',beer:'Пиво',whiskey:'Виски и крепкий алкоголь',shots:'Шоты',cocktails:'Коктейли (нажмите для состава)',ageTitle:'Только 21+',ageText:'Вам должно быть 21 год или больше для входа',ageYes:'Да, мне есть 21+',ageNo:'Нет'},
