@@ -5,21 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tiger Bar Phuket</title>
 <style>
+*{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;background:#0b0f0c;color:#fff}
 .container{max-width:480px;margin:auto;padding:16px}
 h1{text-align:center;margin:10px 0 5px}
 .sub{text-align:center;color:#7CFF9E;font-size:14px;margin-bottom:12px}
 .lang{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
-.lang button{flex:1;padding:8px;border:none;border-radius:10px;background:#1c2b22;color:#fff}
+.lang button{flex:1;padding:8px;border:none;border-radius:10px;background:#1c2b22;color:#fff;cursor:pointer}
 .lang button.active{background:#2ecc71;color:#000;font-weight:600}
-.section{margin-top:20px}
-.section h2{border-bottom:1px solid #2ecc71;padding-bottom:6px}
+.section{margin-top:22px}
+.section h2{border-bottom:1px solid #2ecc71;padding-bottom:6px;margin-bottom:10px}
 .item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #233}
 .note{margin:14px 0;padding:10px;border-radius:12px;background:#14241b;text-align:center}
-.map-btn{display:block;margin:12px 0;padding:12px;border-radius:14px;background:#2ecc71;color:#000;text-align:center;text-decoration:none;font-weight:600}
+.map-btn{display:block;width:100%;margin:14px 0;padding:12px;border-radius:14px;background:#2ecc71;color:#000;text-align:center;text-decoration:none;font-weight:600}
 .cocktail{margin:8px 0}
-.cocktail button{width:100%;background:#1c2b22;color:#fff;border:none;padding:10px;border-radius:12px;text-align:left}
-.cocktail-content{display:none;padding:8px 12px;font-size:14px;color:#cfc;background:#0f1a14;border-radius:0 0 12px 12px}
+.cocktail button{width:100%;background:#1c2b22;color:#fff;border:none;padding:10px;border-radius:12px;text-align:left;cursor:pointer}
+.cocktail-content{display:none;padding:10px 12px;font-size:14px;color:#cfc;background:#0f1a14;border-radius:0 0 12px 12px}
 </style>
 </head>
 <body>
@@ -28,13 +29,13 @@ h1{text-align:center;margin:10px 0 5px}
 <div class="sub" id="note"></div>
 
 <div class="lang">
-<button onclick="setLang('en')">EN</button>
-<button onclick="setLang('ru')">RU</button>
-<button onclick="setLang('th')">TH</button>
-<button onclick="setLang('cn')">中文</button>
+<button id="btn-en" onclick="setLang('en')">EN</button>
+<button id="btn-ru" onclick="setLang('ru')">RU</button>
+<button id="btn-th" onclick="setLang('th')">TH</button>
+<button id="btn-cn" onclick="setLang('cn')">中文</button>
 </div>
 
-<a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8?g_st=ipc" target="_blank" id="mapBtn"></a>
+<a class="map-btn" href="https://maps.app.goo.gl/ah7bLv2LuLStC77v8?g_st=ipc" target="_blank" rel="noopener">📍 Open in Google Maps</a>
 
 <div id="menu"></div>
 </div>
@@ -42,36 +43,25 @@ h1{text-align:center;margin:10px 0 5px}
 <script>
 const data={
  note:{en:'🎱 Free Billiard',ru:'🎱 Бильярд бесплатен',th:'🎱 เล่นพูลฟรี',cn:'🎱 台球免费'},
- map:{en:'📍 Open in Google Maps',ru:'📍 Открыть на карте',th:'📍 เปิดแผนที่',cn:'📍 打开地图'},
- beer:{en:'Beer',ru:'Пиво',th:'เบียร์',cn:'啤酒'},
- cocktails:{en:'Cocktails (tap for ingredients)',ru:'Коктейли (нажмите для состава)',th:'ค็อกเทล (กดดูส่วนผสม)',cn:'鸡尾酒（点击查看配料）'},
+ titles:{
+  beer:{en:'Drinks',ru:'Напитки',th:'เครื่องดื่ม',cn:'饮品'},
+  wine:{en:'Wine',ru:'Вино',th:'ไวน์',cn:'葡萄酒'},
+  spirits:{en:'Spirits',ru:'Крепкий алкоголь',th:'สุรา',cn:'烈酒'},
+  shots:{en:'Shots',ru:'Шоты',th:'ช็อต',cn:'短饮'},
+  cocktails:{en:'Cocktails (tap for ingredients)',ru:'Коктейли (нажмите для состава)',th:'ค็อกเทล (กดดูส่วนผสม)',cn:'鸡尾酒（点击查看配料）'}
+ },
  items:{
   beer:[
-   ['Water','30 THB'],
-   ['Singha','100 THB'],
-   ['Heineken','100 THB'],
-   ['San Mig Light','100 THB'],
-   ['SPY','150 THB'],
-   ['Smirnoff Ice','150 THB'],
-   ['Strongbow Apple Cider','180 THB'],
-   ['Kopparberg (Mixed Fruit / Strawberry & Lime)','250 THB']
+   ['Water','30 THB'],['Singha','100 THB'],['Heineken','100 THB'],['San Mig Light','100 THB'],['SPY','150 THB'],['Smirnoff Ice','150 THB'],['Strongbow Apple Cider','180 THB'],['Kopparberg (Mixed Fruit / Strawberry & Lime)','250 THB']
   ],
   wine:[
-   ['Red Wine (glass)','180 THB'],
-   ['White Wine (glass)','180 THB'],
-   ['Wine Bottle','1000 THB']
+   ['Red wine (glass)','180 THB'],['White wine (glass)','180 THB'],['Bottle','1000 THB']
   ],
   spirits:[
-   ['Bacardi','160 THB'],
-   ['Malibu','160 THB'],
-   ['Vodka','180 THB'],
-   ['Gin','180 THB'],
-   ['Bombay','180 THB'],
-   ['Whiskey (Jack Daniel’s / Black Label / Red Label / Captain Morgan)','180 THB']
+   ['Bacardi','160 THB'],['Malibu','160 THB'],['Vodka','180 THB'],['Gin','180 THB'],['Bombay','180 THB'],['Whiskey (Jack Daniel’s / Black Label / Red Label / Captain Morgan)','180 THB']
   ],
   shots:[
-   ['Vodka Shot','150 THB'],
-   ['Tequila Shot','150–160 THB']
+   ['Vodka shot','150 THB'],['Tequila shot','150–160 THB']
   ],
   cocktails:[
    {name:'Margarita',price:'100 THB',desc:{en:'Tequila (Blanco), Triple Sec (Cointreau), fresh lime juice',ru:'Текила (бланко), трипл сек (Cointreau), свежий сок лайма',th:'เตกีล่า บลังโก ทริปเปิลเซค น้ำมะนาวสด',cn:'银龙舌兰、橙味利口酒、鲜青柠汁'}},
@@ -87,25 +77,39 @@ const data={
    {name:'Tom Collins',price:'100 THB',desc:{en:'Gin, fresh lemon juice, sugar syrup, soda water',ru:'Джин, лимонный сок, сахарный сироп, сода',th:'จิน น้ำเลมอน ไซรัป โซดา',cn:'金酒、柠檬汁、糖浆、苏打水'}}
   ]
  }
-  ]
- }
 };
 let currentLang='en';
 
-function setLang(l){currentLang=l;document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));document.querySelector(`button[onclick="setLang('${l}')"]`).classList.add('active');render();}
+function setLang(lang){
+ currentLang=lang;
+ ['en','ru','th','cn'].forEach(l=>{
+  const b=document.getElementById('btn-'+l);
+  if(b) b.classList.toggle('active',l===lang);
+ });
+ render();
+}
+
+function section(title,items){
+ return `<div class="section"><h2>${title}</h2>${items.map(i=>`<div class="item"><span>${i[0]}</span><span>${i[1]}</span></div>`).join('')}</div>`;
+}
 
 function render(){
  document.getElementById('note').innerText=data.note[currentLang];
- document.getElementById('mapBtn').innerText=data.map[currentLang];
- const m=document.getElementById('menu');m.innerHTML='';
- m.innerHTML+=`<div class='section'><h2>${data.beer[currentLang]}</h2>${data.items.beer.map(i=>`<div class='item'><span>${i[0]}</span><span>${i[1]}</span></div>`).join('')}</div>`;
- m.innerHTML+=`<div class='section'><h2>${data.cocktails[currentLang]}</h2>${data.items.cocktails.map(c=>`<div class='cocktail'><button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">${c.name} — ${c.price}</button><div class='cocktail-content'>${c.desc[currentLang]}</div></div>`).join('')}</div>`;
+ const m=document.getElementById('menu');
+ m.innerHTML='';
+ m.innerHTML+=section(data.titles.beer[currentLang],data.items.beer);
+ m.innerHTML+=section(data.titles.wine[currentLang],data.items.wine);
+ m.innerHTML+=section(data.titles.spirits[currentLang],data.items.spirits);
+ m.innerHTML+=section(data.titles.shots[currentLang],data.items.shots);
+ m.innerHTML+=`<div class="section"><h2>${data.titles.cocktails[currentLang]}</h2>${data.items.cocktails.map(c=>`<div class="cocktail"><button onclick="toggle(this)">${c.name} — ${c.price}</button><div class="cocktail-content">${c.desc[currentLang]}</div></div>`).join('')}</div>`;
 }
+
+function toggle(btn){
+ const box=btn.nextElementSibling;
+ box.style.display=box.style.display==='block'?'none':'block';
+}
+
 setLang('en');
 </script>
-</body>
-</html>
-
-
 </body>
 </html>
