@@ -122,95 +122,119 @@ h1 {
 <script>
 let lang = 'en';
 
-const sections = {
-  soft: {
-    title: { en: 'Soft Drinks', ru: 'Безалкогольные', th: 'น้ำอัดลม', cn: '软饮' },
-    items: [
-      ['Water','30'],['M-150','50'],['Coca-Cola','50'],['Coke Light','50'],['Coke Diet','50'],
-      ['Schweppes Lemon','50'],['Orange Juice','70'],['Apple Juice','70'],['Pineapple Juice','70'],
-      ['Cranberry Juice','70'],['Soda Water','50'],['Tonic Water','50'],['Red Bull','100']
-    ]
+const i18n = {
+  en: {
+    free: '🎱 Free Billiard',
+    map: '📍 Open in Google Maps',
+    soft: 'Soft Drinks',
+    beer: 'Beer',
+    whiskey: 'Whiskey',
+    shots: 'Shots',
+    cocktails: 'Cocktails (tap to see ingredients)'
   },
-  beer: {
-    title: { en: 'Beer', ru: 'Пиво', th: 'เบียร์', cn: '啤酒' },
-    items: [
-      ['Leo','80'],['Chang','80'],['Tiger','80'],['Heineken','80'],
-      ['Singha','100'],['San Mig Light','100']
-    ]
+  ru: {
+    free: '🎱 Бильярд бесплатно',
+    map: '📍 Открыть в Google Maps',
+    soft: 'Безалкогольные напитки',
+    beer: 'Пиво',
+    whiskey: 'Виски и крепкий алкоголь',
+    shots: 'Шоты',
+    cocktails: 'Коктейли (нажмите для состава)'
   },
-  whiskey: {
-    title: { en: 'Whiskey', ru: 'Виски', th: 'วิสกี้', cn: '威士忌' },
-    items: [
-      ['Sangsom','80'],['Hongtong','80'],['Blend 225','225'],
-      ['Jack Daniel’s','180'],['Black Label','180'],['Red Label','180'],
-      ['Captain Morgan','180'],['Chivas Regal','180'],['Jameson','180'],['Ballantine’s','180'],
-      ['Bacardi','160'],['Malibu','160'],['Vodka','180'],['Gin','180'],['Bombay','180']
-    ]
+  th: {
+    free: '🎱 เล่นพูลฟรี',
+    map: '📍 เปิดใน Google Maps',
+    soft: 'เครื่องดื่มไม่มีแอลกอฮอล์',
+    beer: 'เบียร์',
+    whiskey: 'วิสกี้และสุรา',
+    shots: 'ช็อต',
+    cocktails: 'ค็อกเทล (กดดูส่วนผสม)'
   },
-  shots: {
-    title: { en: 'Shots', ru: 'Шоты', th: 'ช็อต', cn: '短饮' },
-    items: [
-      ['Vodka','150'],['Tequila','150–160'],['Sangsom','60']
-    ]
-  },
-  cocktails: {
-    title: { en: 'Cocktails (tap)', ru: 'Коктейли (нажмите)', th: 'ค็อกเทล', cn: '鸡尾酒' },
-    items: [
-      ['Margarita','Tequila, Triple Sec, Lime'],
-      ['Mai Tai','White rum, Dark rum, Curaçao, Orgeat, Lime'],
-      ['Piña Colada','White rum, Coconut cream, Pineapple'],
-      ['Blue Hawaii','White rum, Blue Curaçao, Pineapple, Lemon'],
-      ['Black Russian','Vodka, Coffee liqueur'],
-      ['White Russian','Vodka, Coffee liqueur, Cream'],
-      ['Cuba Libre','White rum, Cola, Lime'],
-      ['Long Island Iced Tea','Vodka, Gin, Rum, Tequila, Triple sec, Cola'],
-      ['Tequila Sunrise','Tequila, Orange juice, Grenadine'],
-      ['B-52','Coffee liqueur, Irish cream, Triple sec'],
-      ['Tom Collins','Gin, Lemon, Sugar syrup, Soda']
-    ]
+  cn: {
+    free: '🎱 台球免费',
+    map: '📍 在 Google 地图中打开',
+    soft: '无酒精饮料',
+    beer: '啤酒',
+    whiskey: '威士忌及烈酒',
+    shots: '短饮',
+    cocktails: '鸡尾酒（点击查看配料）'
   }
+};
+
+const sections = {
+  soft: [
+    ['Water','30'],['M-150','50'],['Coca-Cola','50'],['Coke Light','50'],['Coke Diet','50'],
+    ['Schweppes Lemon','50'],['Orange Juice','70'],['Apple Juice','70'],['Pineapple Juice','70'],
+    ['Cranberry Juice','70'],['Soda Water','50'],['Tonic Water','50'],['Red Bull','100']
+  ],
+  beer: [
+    ['Leo','80'],['Chang','80'],['Tiger','80'],['Heineken','80'],
+    ['Singha','100'],['San Mig Light','100']
+  ],
+  whiskey: [
+    ['Sansom','80'],['Hongtong','80'],['Blend 225','225'],
+    ['Jack Daniel’s','180'],['Black Label','180'],['Red Label','180'],
+    ['Captain Morgan','180'],['Chivas Regal','180'],['Jameson','180'],['Ballantine’s','180'],
+    ['Bacardi','160'],['Malibu','160'],['Vodka','180'],['Gin','180'],['Bombay','180']
+  ],
+  shots: [
+    ['Vodka','150'],['Tequila','150/160'],['Tequila Rose','160'],['Sambuca','160'],
+    ['Black Sambuca','160'],['Jägermeister','160'],['Sansom','60'],['B-52','180']
+  ],
+  cocktails: [
+    ['Margarita','Tequila, Triple Sec, Lime'],
+    ['Mai Tai','White rum, Dark rum, Curaçao, Orgeat, Lime'],
+    ['Piña Colada','White rum, Coconut cream, Pineapple'],
+    ['Blue Hawaii','White rum, Blue Curaçao, Pineapple, Lemon'],
+    ['Black Russian','Vodka, Coffee liqueur'],
+    ['White Russian','Vodka, Coffee liqueur, Cream'],
+    ['Cuba Libre','White rum, Cola, Lime'],
+    ['Long Island Iced Tea','Vodka, Gin, Rum, Tequila, Triple sec, Cola'],
+    ['Tequila Sunrise','Tequila, Orange juice, Grenadine'],
+    ['B-52','Coffee liqueur, Irish cream, Triple sec'],
+    ['Tom Collins','Gin, Lemon, Sugar syrup, Soda']
+  ]
 };
 
 function render() {
   const menu = document.getElementById('menu');
   menu.innerHTML = '';
 
-  Object.values(sections).forEach(sec => {
-    const div = document.createElement('div');
-    div.className = 'section';
-    div.innerHTML = `<h2>${sec.title[lang]}</h2>`;
+  document.querySelector('.note').textContent = i18n[lang].free;
+  document.querySelector('.map-btn').textContent = i18n[lang].map;
 
-    sec.items.forEach(it => {
-      if (sec === sections.cocktails) {
+  Object.keys(sections).forEach(key => {
+    const sec = document.createElement('div');
+    sec.className = 'section';
+    sec.innerHTML = `<h2>${i18n[lang][key]}</h2>`;
+
+    sections[key].forEach(it => {
+      if (key === 'cocktails') {
         const c = document.createElement('div');
         c.className = 'cocktail';
         c.innerHTML = `
-          <div class="cocktail-name">
-            <span>${it[0]}</span><span>180 THB</span>
-          </div>
-          <div class="cocktail-desc">${it[1]}</div>
-        `;
+          <div class="cocktail-name"><span>${it[0]}</span><span>180 THB</span></div>
+          <div class="cocktail-desc">${it[1]}</div>`;
         c.querySelector('.cocktail-name').onclick = () => {
           const d = c.querySelector('.cocktail-desc');
           d.style.display = d.style.display === 'block' ? 'none' : 'block';
         };
-        div.appendChild(c);
+        sec.appendChild(c);
       } else {
         const row = document.createElement('div');
         row.className = 'item';
         row.innerHTML = `<span>${it[0]}</span><span>${it[1]} THB</span>`;
-        div.appendChild(row);
+        sec.appendChild(row);
       }
     });
-
-    menu.appendChild(div);
+    menu.appendChild(sec);
   });
 }
 
-function setLang(l) {
+function setLang(l, el) {
   lang = l;
   document.querySelectorAll('.lang button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  el.classList.add('active');
   render();
 }
 
